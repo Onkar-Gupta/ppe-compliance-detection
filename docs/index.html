@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ppe-compliance-detection</title>
+<meta name="description" content="Three YOLO generations, 18 training runs and a zone monitor for PPE compliance. The dataset moved the score far more than the detector. Every number traced to a file in the repo.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2311110F'/%3E%3Cpath d='M6 21a10 10 0 0 1 20 0z' fill='%23F2B33D'/%3E%3Crect x='4' y='21' width='24' height='3' rx='1.5' fill='%23F2B33D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --bg:#0D0D0B; --surface:#141411; --deep:#070706; --paper:#FBF8F1; --ink:#11110F;
+  --text:#F2EDE2; --muted:rgba(242,237,226,.64); --faint:rgba(242,237,226,.42); --line:rgba(242,237,226,.14);
+  --accent:#F2B33D; --on-accent:#0D0D0B; --bad:#E5604D; --good:#7FC98A;
+  --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --sans:"Inter Tight",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --gutter:clamp(20px,4.4vw,64px);
+}
+html,body{background:var(--bg);color:var(--text);color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:100;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1360px;margin:0 auto;padding:0 var(--gutter)}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.eyebrow b{color:var(--accent);font-weight:500}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.02em;line-height:.98}
+h2{font-size:clamp(40px,5.6vw,84px);max-width:16ch}
+h2 em,h1 em{font-style:italic;color:var(--accent)}
+.lede{font-size:clamp(17px,1.5vw,20px);color:var(--muted);max-width:58ch}
+section{padding:clamp(72px,10vw,150px) 0;position:relative}
+.rule{border:0;border-top:1px solid var(--line)}
+.js .reveal{opacity:0;transform:translateY(22px);filter:blur(6px);transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);transition-delay:calc(var(--i,0)*90ms)}
+.js .reveal.in{opacity:1;transform:none;filter:none}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:14px 0;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+nav.stuck{background:rgba(13,13,11,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:600 16px/1 var(--sans);letter-spacing:-.01em}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(242,179,61,.16)}
+.links{display:flex;gap:30px;font-size:14.5px}
+.links a{text-decoration:none;color:var(--muted);transition:color .2s}
+.links a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;font:500 15px/1 var(--sans);text-decoration:none;border:1px solid var(--text);transition:transform .35s var(--ease),background .25s,color .25s;cursor:pointer}
+.btn:hover{transform:translateY(-2px)}
+.btn.solid{background:var(--text);color:var(--bg)}
+.btn.solid:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn.ghost:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
+.btn.sm{padding:10px 18px;font-size:14px}
+.btn svg{width:15px;height:15px;transition:transform .35s var(--ease)}
+.btn:hover svg{transform:translate(3px,-3px)}
+
+.hero{padding-top:clamp(120px,15vh,170px);padding-bottom:clamp(8px,2vw,24px);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-10% -10% auto auto;width:70vw;height:70vw;max-width:900px;max-height:900px;background:radial-gradient(closest-side,rgba(242,179,61,.14),transparent);pointer-events:none;z-index:0}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{font-size:clamp(50px,9.6vw,150px);line-height:.9;letter-spacing:-.035em;max-width:12ch;margin:26px 0 30px}
+.hero-sub{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,5vw,80px);align-items:end}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.meta{display:flex;flex-wrap:wrap;gap:10px 34px;margin-top:clamp(36px,5vw,64px);padding-top:22px;border-top:1px solid var(--line);font:500 13px/1.3 var(--mono);color:var(--muted)}
+.meta b{color:var(--text);font-weight:500}
+
+/* replay */
+.demo-head{display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap;margin-bottom:34px}
+#replay h2{max-width:none}
+.player{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);border-radius:22px;overflow:hidden;background:var(--deep);box-shadow:0 0 0 1px var(--line),0 40px 90px -30px rgba(0,0,0,.8)}
+.screen{position:relative;background:#000;aspect-ratio:16/9;min-height:0}
+.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.screen .badge{position:absolute;right:14px;bottom:14px;font:500 11.5px/1 var(--mono);letter-spacing:.06em;padding:8px 10px;border-radius:8px;background:rgba(7,7,6,.78);color:var(--text)}
+.screen .alertflash{position:absolute;right:14px;top:14px;font:500 12px/1 var(--mono);padding:9px 12px;border-radius:8px;background:var(--bad);color:#0D0D0B;opacity:0;transform:translateY(-6px);transition:opacity .25s,transform .25s}
+.screen .alertflash.on{opacity:1;transform:none}
+.panel{padding:clamp(18px,2.2vw,30px);display:flex;flex-direction:column;gap:22px;border-left:1px solid var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpi{padding:12px 12px 10px;border:1px solid var(--line);border-radius:12px}
+.kpi b{display:block;font:400 34px/1 var(--serif);font-variant-numeric:tabular-nums}
+.kpi span{font:500 11px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kpi.hot b{color:var(--bad)}
+.log h3,.cmp h3{font:500 11.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+.log ul{list-style:none;display:grid;gap:8px;min-height:64px}
+.log li{font:400 13.5px/1.45 var(--mono);color:var(--text);padding:10px 12px;border-radius:10px;background:rgba(229,96,77,.12);border-left:3px solid var(--bad)}
+.log li.empty{background:transparent;border-left-color:var(--line);color:var(--muted)}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center;font-size:13.5px;color:var(--muted)}
+.bar .track{grid-column:1/-1;height:10px;border-radius:99px;background:rgba(242,237,226,.1);overflow:hidden}
+.bar .fill{height:100%;border-radius:99px;width:0;background:rgba(242,237,226,.72);transition:width 1.2s var(--ease)}
+.bar.win .fill{background:var(--accent)}
+.bar b{font:500 15px/1 var(--mono);color:var(--text)}
+.controls{display:flex;gap:14px;align-items:center;padding:14px clamp(18px,2.2vw,30px);border-top:1px solid var(--line);grid-column:1/-1;background:var(--surface)}
+.playbtn{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer;display:grid;place-items:center;transition:all .25s}
+.playbtn:hover{background:var(--text);color:var(--bg)}
+.playbtn svg{width:16px;height:16px}
+.scrub{position:relative;flex:1;min-width:0}
+.scrub input{width:100%;accent-color:var(--accent);height:28px;background:transparent}
+.ticks{position:absolute;left:0;right:0;top:-4px;height:8px;pointer-events:none}
+.ticks i{position:absolute;top:0;width:3px;height:8px;border-radius:2px;background:var(--bad);transform:translateX(-1px)}
+.clock{flex:none;font:500 13px/1 var(--mono);color:var(--muted);min-width:96px;text-align:right;font-variant-numeric:tabular-nums}
+.note{margin-top:20px;font:400 13px/1.6 var(--mono);color:var(--muted);max-width:110ch}
+.err{padding:28px;color:var(--muted);font:400 14px/1.6 var(--mono)}
+
+/* findings */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--text);margin-top:56px}
+.stat{padding:30px 26px 30px 0;border-right:1px solid var(--line)}
+.stat+.stat{padding-left:26px}
+.stat:last-child{border-right:0}
+.big{font:400 clamp(48px,6vw,96px)/.9 var(--serif);letter-spacing:-.03em;display:block;font-variant-numeric:tabular-nums}
+.big em{font-style:normal;color:var(--accent)}
+.stat .what{font-weight:500;margin-top:14px;display:block}
+.stat .vs{font:400 13px/1.5 var(--mono);color:var(--muted);margin-top:6px;display:block}
+.tablewrap{margin-top:56px;overflow-x:auto;border:1px solid var(--line);border-radius:18px}
+table{width:100%;border-collapse:collapse;font-size:15px;min-width:640px}
+th,td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+th{font:500 11.5px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);background:var(--surface)}
+tr:last-child td{border-bottom:0}
+td small{color:var(--muted);font:400 12.5px/1 var(--mono)}
+td.hi{color:var(--accent);font-weight:500}
+.figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:28px}
+.fig{margin:0;border-radius:18px;overflow:hidden;background:var(--paper);color:var(--ink)}
+.fig img{display:block;width:100%;height:auto}
+.fig figcaption{padding:14px 18px;font:400 13px/1.5 var(--mono);color:#4a4943;border-top:1px solid #e6e0d2}
+.foot-note{margin-top:20px;font:400 13px/1.5 var(--mono);color:var(--muted);max-width:110ch}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,4vw,64px);margin-top:56px}
+.two h3{font-size:34px;margin-bottom:12px}
+.two p{color:var(--muted);font-size:15.5px;max-width:52ch}
+
+/* how */
+.flow{margin-top:40px}
+.flow h3{font:500 11.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--text)}
+.step{padding:26px 24px 8px 0}
+.step+.step{padding-left:24px;border-left:1px solid var(--line)}
+.step .no{font:500 12px/1 var(--mono);color:var(--accent)}
+.step h4{font:400 30px/1 var(--serif);letter-spacing:-.02em;margin:16px 0 10px}
+.step p{font-size:15px;color:var(--muted)}
+
+.limits{margin-top:44px;border-top:1px solid var(--text)}
+.limit{display:grid;grid-template-columns:60px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);max-width:960px}
+.limit span{font:500 12px/1.9 var(--mono);color:var(--accent)}
+.limit p{font-size:17px}
+
+.dark{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.run{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(28px,5vw,90px);align-items:start}
+.run>*{min-width:0}
+.code{white-space:pre;max-width:100%;background:var(--deep);border:1px solid var(--line);border-radius:18px;padding:26px 28px;font:400 14px/1.8 var(--mono);overflow-x:auto}
+.code .c{color:rgba(242,237,226,.45)}
+.code .p{color:var(--accent)}
+.code+.code{margin-top:14px}
+.code-title{display:block;font:500 11.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(242,237,226,.5);margin-bottom:14px}
+
+footer{border-top:1px solid var(--line);padding:46px 0 60px;font-size:14.5px;color:var(--muted)}
+.foot{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:32px}
+footer h4{font:500 11.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--text);margin-bottom:14px}
+footer a{display:block;text-decoration:none;padding:3px 0}
+footer a:hover{color:var(--accent)}
+.fine{margin-top:36px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;max-width:110ch}
+
+@media(max-width:980px){
+  .links{display:none}
+  .hero-sub,.run,.two{grid-template-columns:minmax(0,1fr)}
+  .player{grid-template-columns:minmax(0,1fr)}
+  .panel{border-left:0;border-top:1px solid var(--line)}
+  .stats,.steps,.figs{grid-template-columns:minmax(0,1fr)}
+  .stat,.stat+.stat{padding:24px 0;border-right:0;border-top:1px solid var(--line)}
+  .step+.step{padding-left:0;border-left:0;border-top:1px solid var(--line);margin-top:20px}
+  .foot{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  body{font-size:16px}
+  .brand{font-size:14px}
+  .screen .badge{font-size:10px;padding:6px 8px;max-width:72%;line-height:1.3}
+  .foot{grid-template-columns:1fr}
+  .nav-in .btn{padding:9px 16px;font-size:13.5px}
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .clock{min-width:80px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .reveal{opacity:1;transform:none;filter:none;transition:none}
+  .bar .fill{transition:none}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="ppe-compliance-detection, home"><span class="dot"></span>ppe-compliance-detection</a>
+    <div class="links">
+      <a href="#replay">Replay</a><a href="#results">Results</a><a href="#how">How it works</a><a href="#limits">Limits</a><a href="#run">Run it</a>
+    </div>
+    <a class="btn solid sm" href="https://github.com/Onkar-Gupta/ppe-compliance-detection">GitHub
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12L12 4M5.5 4H12v6.5"/></svg></a>
+  </div>
+</nav>
+
+<main id="top">
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow reveal"><b>●</b>&nbsp; MSc dissertation &nbsp;·&nbsp; open source &nbsp;·&nbsp; v1.0.0</p>
+    <h1 class="reveal" style="--i:1">The detector didn't decide it. The <em>dataset</em> did.</h1>
+    <div class="hero-sub">
+      <p class="lede reveal" style="--i:2">Three YOLO generations, 18 training runs, two datasets and a zone monitor that turns detections into alerts. Every number on this page comes from a file in the repo.</p>
+      <div class="cta reveal" style="--i:3">
+        <a class="btn solid" href="#replay">Watch the replay</a>
+        <a class="btn ghost" href="#results">Read the results</a>
+      </div>
+    </div>
+    <div class="meta reveal" style="--i:4">
+      <span><b>18</b> training runs</span>
+      <span><b>2</b> datasets, <b>9,420</b> images</span>
+      <span><b>2,497</b> workers in the violation test</span>
+      <span><b>201</b> tests, CI green</span>
+    </div>
+  </div>
+</header>
+
+<section id="replay" style="padding-top:clamp(36px,5vw,64px)">
+  <div class="wrap">
+    <div class="demo-head">
+      <div>
+        <p class="eyebrow reveal">Saved replay of a real run</p>
+        <h2 class="reveal" style="--i:1;margin-top:18px">Watch the monitor <em>work</em>.</h2>
+      </div>
+    </div>
+    <div class="player reveal" style="--i:1" id="player">
+      <div class="screen" id="screen">
+        <img id="frame" alt="A frame from a construction-site clip with the safety zone and each worker's compliance drawn on it" decoding="async">
+        <span class="badge" id="badge">loading the replay</span>
+        <span class="alertflash" id="flash">ALERT FIRED</span>
+      </div>
+      <div class="panel">
+        <div class="kpis">
+          <div class="kpi"><b id="k-people">0</b><span>people in frame</span></div>
+          <div class="kpi" id="k-breach-box"><b id="k-breach">0</b><span>in breach now</span></div>
+          <div class="kpi"><b id="k-alerts">0</b><span>alerts so far</span></div>
+        </div>
+        <div class="log">
+          <h3>Alert log</h3>
+          <ul id="log"><li class="empty">No alert yet. A worker has to stay in breach for the full dwell time first.</li></ul>
+        </div>
+        <div class="cmp">
+          <h3>Same clip, alerts fired</h3>
+          <div class="bars" id="bars"></div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="playbtn" id="play" type="button" aria-label="Play or pause the replay"><svg id="ico" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg></button>
+        <div class="scrub"><div class="ticks" id="ticks"></div><input id="scrub" type="range" min="0" max="0" value="0" step="1" aria-label="Scrub through the replay"></div>
+        <span class="clock" id="clock">0.0 s</span>
+      </div>
+    </div>
+    <p class="note" id="note"></p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="results">
+  <div class="wrap">
+    <p class="eyebrow reveal">Results · test splits · mean of 3 seeds</p>
+    <h2 class="reveal" style="--i:1;margin-top:18px">The score moved with the <em>data</em>, not the model.</h2>
+    <div class="stats">
+      <div class="stat reveal"><span class="big"><em>0.35</em> to <em>0.40</em></span><span class="what">mAP50 lost by CHV-trained models on SH17</span><span class="vs">SH17-trained models gained 0.08 to 0.13 on CHV</span></div>
+      <div class="stat reveal" style="--i:1"><span class="big">&lt;&nbsp;<em>0.02</em></span><span class="what">in-domain mAP50 spread across the three architectures</span><span class="vs">0.881 to 0.893 on CHV, 0.665 to 0.671 on SH17</span></div>
+      <div class="stat reveal" style="--i:2"><span class="big"><em>0.15</em></span><span class="what">smallest Holm-adjusted p of the five omnibus tests</span><span class="vs">none of the five is significant</span></div>
+    </div>
+
+    <div class="tablewrap reveal">
+      <table>
+        <thead><tr><th>Trained on</th><th>Tested on</th><th>YOLOv8n</th><th>YOLO11n</th><th>YOLO26n</th></tr></thead>
+        <tbody>
+          <tr><td>CHV</td><td>CHV (in-domain)</td><td class="hi">0.892 <small>[0.882, 0.898]</small></td><td class="hi">0.893 <small>[0.887, 0.899]</small></td><td class="hi">0.881 <small>[0.876, 0.884]</small></td></tr>
+          <tr><td>CHV</td><td>SH17 (cross)</td><td>0.524 <small>[0.511, 0.532]</small></td><td>0.507 <small>[0.490, 0.520]</small></td><td>0.524 <small>[0.516, 0.530]</small></td></tr>
+          <tr><td>SH17</td><td>SH17 (in-domain)</td><td>0.666 <small>[0.662, 0.669]</small></td><td>0.671 <small>[0.663, 0.677]</small></td><td>0.665 <small>[0.660, 0.669]</small></td></tr>
+          <tr><td>SH17</td><td>CHV (cross)</td><td>0.792 <small>[0.786, 0.795]</small></td><td>0.784 <small>[0.769, 0.792]</small></td><td>0.759 <small>[0.741, 0.770]</small></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="foot-note">mAP50 with a 95 % BCa bootstrap interval over 3 seeds. Nano models only. Tests: exact paired sign-flip, Friedman and Nemenyi, with Holm correction across the five metrics.</p>
+
+    <div class="figs">
+      <figure class="fig reveal"><img src="img/X05-fig1-transfer-grid.png" alt="Heat maps of mAP50 for each model, trained on one dataset and tested on the other" loading="lazy"><figcaption>Transfer grid: each cell is one model, trained on the row and tested on the column.</figcaption></figure>
+      <figure class="fig reveal" style="--i:1"><img src="img/X05-fig3-cd-diagram.png" alt="Critical-difference diagrams for five metrics, with Holm-adjusted p-values, all showing no detectable difference between architectures" loading="lazy"><figcaption>Critical-difference diagrams with Holm-adjusted p. Models joined by a bar are not distinguishable.</figcaption></figure>
+    </div>
+
+    <div class="two">
+      <div class="reveal"><h3>Finding the person is the bottleneck.</h3><p>Zero-shot on Pictor-PPE (774 images, 2,497 workers), helmet recall was 0.69 to 0.73 for SH17-trained models and 0.46 to 0.55 for CHV-trained ones. Only 59 to 73 % of workers were detected at all, and an undetected worker counts as a missed violation.</p></div>
+      <div class="reveal" style="--i:1"><h3>Speed on a laptop.</h3><p>Batch 1, 640 px, end to end on an RTX 4070 Laptop: YOLOv8n 10.6 ms (94 fps), YOLO11n 12.6 ms (79 fps), YOLO26n 13.7 ms (73 fps). A proxy for deployment cost, not an edge-device measurement. After an offline pre-resize, epoch time fell from 244.8 s to 45.0 s.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="how">
+  <div class="wrap">
+    <p class="eyebrow reveal">How it works</p>
+    <h2 class="reveal" style="--i:1;margin-top:18px">Two pipelines, <em>one</em> rulebook.</h2>
+    <div class="flow reveal">
+      <h3>The benchmark</h3>
+      <div class="steps">
+        <div class="step"><span class="no">01</span><h4>Harmonise</h4><p>SH17 and CHV mapped to three classes (person, helmet, vest). Cross-dataset near-duplicates are excluded so transfer scores are not inflated.</p></div>
+        <div class="step"><span class="no">02</span><h4>Freeze</h4><p>Six split lists with an ID each, checked by a test on every run. A config is never edited after its run starts.</p></div>
+        <div class="step"><span class="no">03</span><h4>Train and score</h4><p>18 runs, then scored on test splits no run ever read.</p></div>
+        <div class="step"><span class="no">04</span><h4>Test the claim</h4><p>Seeds aggregated with intervals, then paired and omnibus tests with Holm correction.</p></div>
+      </div>
+    </div>
+    <div class="flow reveal">
+      <h3>The monitor</h3>
+      <div class="steps">
+        <div class="step"><span class="no">01</span><h4>Detect and track</h4><p>A YOLO detector and ByteTrack give each worker a stable ID across frames.</p></div>
+        <div class="step"><span class="no">02</span><h4>Associate</h4><p>A containment rule (threshold 0.80) links each person to the helmet and vest they wear.</p></div>
+        <div class="step"><span class="no">03</span><h4>Check the zone</h4><p>A person counts as inside if their feet are inside the drawn polygon.</p></div>
+        <div class="step"><span class="no">04</span><h4>Wait, then alert</h4><p>One alert fires only after 3 s of continuous breach, with a 1 s memory so a briefly hidden helmet does not flip a worker.</p></div>
+      </div>
+    </div>
+    <p class="foot-note" style="margin-top:28px">Pictor-PPE is evaluation-only. The code makes a training config that touches it fail before the first batch.</p>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="wrap">
+    <p class="eyebrow reveal">Limits</p>
+    <h2 class="reveal" style="--i:1;margin-top:18px">What this study <em>does not</em> show.</h2>
+    <div class="limits">
+      <div class="limit reveal"><span>01</span><p>Nano models only, and three seeds. Within one training dataset, an exact paired sign-flip on three seeds cannot return a p-value below 0.25, so a null result means underpowered, not equivalent.</p></div>
+      <div class="limit reveal"><span>02</span><p>Latency was measured on one laptop, and the CPU figures are one run per model.</p></div>
+      <div class="limit reveal"><span>03</span><p>The replay above is the monitor's own output on a stock clip with no ground-truth labels. An alert there is not a verified violation, and no alert-accuracy result is published yet.</p></div>
+      <div class="limit reveal"><span>04</span><p>Trained weights are not distributed and the datasets keep their own terms (SH17 is CC BY-NC-SA 4.0), so reproducing a number needs the data and a trained run. Re-scoring weights is deterministic; retraining is not bit for bit.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="run" class="dark">
+  <div class="wrap run">
+    <div>
+      <p class="eyebrow reveal">Run it</p>
+      <h2 class="reveal" style="--i:1;margin:18px 0 26px">Clone it. <em>Check</em> it.</h2>
+      <p class="lede reveal" style="--i:2">The 201 tests run on any machine with no GPU, datasets or weights. Training needs an NVIDIA GPU with 8 GB.</p>
+      <div class="cta reveal" style="--i:3;margin-top:30px">
+        <a class="btn solid" href="https://github.com/Onkar-Gupta/ppe-compliance-detection">Open the repo</a>
+        <a class="btn ghost" href="https://github.com/Onkar-Gupta/ppe-compliance-detection/tree/main/results">Browse the results</a>
+      </div>
+    </div>
+    <div class="reveal" style="--i:2">
+      <div class="code"><span class="code-title">Quick start</span><span class="c"># tests, CPU only</span>
+<span class="p">$</span> git clone https://github.com/Onkar-Gupta/ppe-compliance-detection
+<span class="p">$</span> cd ppe-compliance-detection
+<span class="p">$</span> pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+<span class="p">$</span> pip install -r requirements.txt
+<span class="p">$</span> pytest -q</div>
+      <div class="code"><span class="code-title">Monitor your own clip</span><span class="c"># after training or with your own weights</span>
+<span class="p">$</span> python -m src.zone --source datasets/demo/clip.mp4 --name my-zone
+<span class="p">$</span> python -m src.monitor --config configs/demo.yaml</div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="brand" href="#top" style="padding:0"><span class="dot"></span>ppe-compliance-detection</a><p style="margin-top:14px;max-width:36ch">Benchmarking YOLOv8, YOLO11 and YOLO26 for PPE compliance, with a real-time zone monitor.</p></div>
+      <div><h4>Project</h4><a href="https://github.com/Onkar-Gupta/ppe-compliance-detection">Repository</a><a href="https://github.com/Onkar-Gupta/ppe-compliance-detection/releases/tag/v1.0.0">Release v1.0.0</a><a href="https://github.com/Onkar-Gupta/ppe-compliance-detection/tree/main/results">Result files</a></div>
+      <div><h4>Author</h4><a href="https://linkedin.com/in/onkar-gupta-ai">Onkar Gupta, LinkedIn</a><a href="https://github.com/Onkar-Gupta">GitHub</a></div>
+    </div>
+    <p class="fine">Code under the MIT licence, copyright (c) 2026 Onkar Gupta. MSc dissertation, WMG, University of Warwick. Datasets are not redistributed and keep their own terms. The replay uses a stock clip from <a href="https://www.pexels.com/video/10294766/" style="display:inline">Pexels</a>, used under the Pexels Licence.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('stuck', window.scrollY > 24); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.15, rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  setTimeout(function(){ document.querySelectorAll('.reveal:not(.in)').forEach(function(el){
+    var r = el.getBoundingClientRect(); if (r.top < window.innerHeight) el.classList.add('in'); }); }, 2500);
+
+  /* ---------- the replay: data comes from replay/replay.json, written by scripts/export_replay.py ---------- */
+  var $ = function(id){ return document.getElementById(id); };
+  var frame = $('frame'), scrub = $('scrub'), clock = $('clock'), badge = $('badge'), flash = $('flash');
+  var data = null, imgs = [], pos = 0, timer = null, playing = false;
+
+  function fmt(t){ return t.toFixed(1) + ' s'; }
+  function render(i){
+    if (!data) return;
+    pos = i; var f = data.frames[i];
+    frame.src = 'replay/frames/' + f.img;
+    scrub.value = i; clock.textContent = fmt(f.t) + ' / ' + fmt(data.frames[data.frames.length-1].t);
+    $('k-people').textContent = f.people;
+    $('k-breach').textContent = f.breach;
+    $('k-breach-box').classList.toggle('hot', f.breach > 0);
+    var fired = data.alerts.filter(function(a){ return a.seconds <= f.t + 1e-6; });
+    $('k-alerts').textContent = fired.length;
+    var ul = $('log');
+    if (!fired.length) { ul.innerHTML = '<li class="empty">No alert yet. A worker has to stay in breach for the full dwell time first.</li>'; }
+    else { ul.innerHTML = fired.map(function(a){ return '<li>t = ' + a.seconds.toFixed(2) + ' s &middot; worker #' + a.track_id + ' &middot; missing ' + a.missing + ' &middot; dwell ' + a.dwell_seconds.toFixed(2) + ' s</li>'; }).join(''); }
+    var justFired = data.alerts.some(function(a){ return a.seconds > f.t - data.every/30 - 1e-6 && a.seconds <= f.t + 1e-6; });
+    flash.classList.toggle('on', justFired);
+  }
+  function setPlaying(on){
+    playing = on;
+    $('ico').innerHTML = on ? '<path d="M3.5 2h3v12h-3zM9.5 2h3v12h-3z"/>' : '<path d="M4 2.5v11l9-5.5z"/>';
+    clearInterval(timer);
+    if (on) {
+      if (pos >= data.frames.length - 1) render(0);
+      var step = (data.every / 30) * 1000;
+      timer = setInterval(function(){
+        if (pos >= data.frames.length - 1) { setPlaying(false); return; }
+        render(pos + 1);
+      }, step);
+    }
+  }
+  function preload(){ data.frames.forEach(function(f, k){ var im = new Image(); im.decoding = 'async'; im.src = 'replay/frames/' + f.img; imgs[k] = im; }); }
+
+  fetch('replay/replay.json').then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }).then(function(d){
+    data = d;
+    scrub.max = d.frames.length - 1;
+    var end = d.frames[d.frames.length-1].t;
+    $('ticks').innerHTML = d.alerts.map(function(a){ return '<i style="left:' + (a.seconds/end*100).toFixed(2) + '%"></i>'; }).join('');
+    var raw = d.alerts_without_dwell_or_memory, on = d.alerts_with_dwell_and_memory, top = Math.max(raw, on, 1);
+    $('bars').innerHTML =
+      '<div class="bar"><span>No dwell, no memory</span><b>' + raw + '</b><div class="track"><div class="fill" data-w="' + (raw/top*100) + '"></div></div></div>' +
+      '<div class="bar win"><span>Dwell ' + d.settings.dwell_seconds + ' s, memory ' + d.settings.memory_seconds + ' s</span><b>' + on + '</b><div class="track"><div class="fill" data-w="' + (on/top*100) + '"></div></div></div>';
+    setTimeout(function(){ document.querySelectorAll('#bars .fill').forEach(function(el){ el.style.width = el.dataset.w + '%'; }); }, 300);
+    var lat = d.latency || {};
+    badge.textContent = 'saved replay, ' + (d.device === 'cpu' ? 'CPU' : 'GPU') + (lat.median_ms ? ', median ' + lat.median_ms.toFixed(1) + ' ms per frame' : '');
+    $('note').innerHTML = 'Clip: <a href="https://www.pexels.com/video/10294766/">Pexels video 10294766</a> (Pexels Licence, credits in the repo), ' + d.frames.length + ' frames sampled from ' + fmt(end) + ' of footage, one frame in ' + d.every + '. The yellow box is the safety zone, drawn by hand. These are the monitor&rsquo;s own outputs, not verified ground truth: the clip has no labels. Raw alerts fire every time any worker in the zone is judged non-compliant; the dwell timer and memory suppress the fleeting ones.';
+    preload(); render(0);
+    if (!reduce) { var po = new IntersectionObserver(function(es){ if (es[0].isIntersecting){ setPlaying(true); po.disconnect(); } }, {threshold:.5}); po.observe($('player')); }
+  }).catch(function(){
+    $('screen').innerHTML = '<div class="err">The replay data could not be loaded. Serve this folder over HTTP (for example <code>python -m http.server</code> in <code>docs/</code>) instead of opening the file directly.</div>';
+  });
+  scrub.addEventListener('input', function(){ if (playing) setPlaying(false); render(parseInt(scrub.value, 10)); });
+  $('play').addEventListener('click', function(){ if (data) setPlaying(!playing); });
+})();
+</script>
+</body>
+</html>
