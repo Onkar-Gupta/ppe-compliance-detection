@@ -1,0 +1,279 @@
+/* Dashboard styling.
+   The palette is not a free choice: red, green, grey and amber are safety verdicts, drawn into
+   the frame itself and defined in the write-up. So the interface stays quiet and keeps blue for
+   anything clickable, which is the one hue that can never be mistaken for a judgement. */
+
+:root {
+  --void: #0b0e13;
+  --surface: #141920;
+  --raised: #1c222b;
+  --line: #262e3a;
+  --line-soft: #1e242e;
+  --ink: #e8eef5;
+  --ink-dim: #94a2b3;
+  --ink-faint: #63707f;
+  --accent: #4d90f0;
+  --alert: #f4442e;
+  --ok: #2ea043;
+  --zone: #d9b528;
+  --radius: 10px;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas, monospace;
+  --step: 180ms cubic-bezier(.4, 0, .2, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--ink);
+  font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2 { margin: 0; font-weight: 600; letter-spacing: -0.015em; }
+h1 { font-size: 15px; }
+h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ink-dim); }
+p { margin: 0 0 8px; }
+.meta { color: var(--ink-faint); font-size: 12.5px; }
+.fine { display: block; margin-top: 3px; color: #5a6673; font-size: 11.5px; }
+.hidden { display: none !important; }
+
+.sprite { display: none; }
+/* Every icon is a stroked outline at one weight, so they read as one set. */
+svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------------------------------------------------------------- header */
+
+.bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 11px 20px;
+  background: var(--surface); border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 10;
+}
+.brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.mark {
+  width: 30px; height: 30px; border-radius: 8px; flex: none;
+  display: grid; place-items: center;
+  background: var(--raised); border: 1px solid var(--line); color: var(--zone);
+}
+.mark svg { width: 19px; height: 19px; }
+.state { display: flex; align-items: center; gap: 12px; min-width: 0; }
+#source-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 46ch; }
+.pill {
+  font-size: 11.5px; font-weight: 600; padding: 4px 11px; border-radius: 999px; flex: none;
+  border: 1px solid var(--line); color: var(--ink-dim); background: var(--raised);
+}
+.pill.running { color: #d7f0dd; border-color: rgba(46,160,67,.5); background: rgba(46,160,67,.16); }
+.pill.done    { color: #cfe3ff; border-color: rgba(77,144,240,.5); background: rgba(77,144,240,.14); }
+.pill.error   { color: #ffd9d4; border-color: rgba(244,68,46,.5); background: rgba(244,68,46,.16); }
+
+/* ---------------------------------------------------------------- layout */
+
+main {
+  display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 16px;
+  padding: 16px 20px 36px; align-items: start;
+}
+@media (max-width: 1000px) { main { grid-template-columns: 1fr; } }
+.rail { display: flex; flex-direction: column; gap: 8px; position: sticky; top: 68px; }
+@media (max-width: 1000px) { .rail { position: static; } }
+
+/* ------------------------------------------------------------ step cards */
+
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+
+.step-head {
+  display: flex; align-items: center; gap: 11px; width: 100%;
+  padding: 12px 13px; background: none; border: none; cursor: pointer;
+  text-align: left; color: inherit; font: inherit;
+}
+.step-head:hover { background: rgba(255,255,255,.02); border-radius: var(--radius); }
+
+/* The number becomes a tick when the step is answered: the rail shows what is left, not what
+   has been done twice. */
+.step-mark {
+  width: 22px; height: 22px; border-radius: 999px; flex: none;
+  display: grid; place-items: center;
+  border: 1px solid var(--line); background: var(--raised);
+  font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+  transition: background var(--step), border-color var(--step), color var(--step);
+}
+.step-mark svg { width: 12px; height: 12px; display: none; stroke-width: 2.4; }
+.step.done .step-mark { background: rgba(46,160,67,.16); border-color: rgba(46,160,67,.5); color: #6ee08a; }
+.step.done .step-num { display: none; }
+.step.done .step-tick { display: block; }
+
+.step-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+.step-title { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
+.step-sum {
+  font-size: 12px; color: var(--ink-faint);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.step.open .step-sum { display: none; }
+.step-chev { width: 16px; height: 16px; flex: none; color: var(--ink-faint); transition: transform var(--step); }
+/* Direct child only: an unscoped rule also spun the chevron inside the Tuning disclosure,
+   which then pointed open while it was shut. */
+.step.open > .step-head .step-chev { transform: rotate(180deg); }
+
+.step-body { display: none; padding: 0 13px 14px; }
+.step.open .step-body { display: block; }
+
+/* ----------------------------------------------------------------- forms */
+
+label { display: block; font-size: 12.5px; color: var(--ink-dim); margin: 13px 0 5px; }
+.step-body > label:first-child, .tuning-body > label:first-child { margin-top: 0; }
+
+input[type="text"], input[type="number"], select {
+  width: 100%; padding: 8px 10px;
+  background: var(--void); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 7px; font: inherit; font-size: 13px;
+}
+input[type="text"] { font-family: var(--mono); font-size: 12.5px; }
+input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible, a:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+input[type="range"] { width: 100%; accent-color: var(--accent); margin: 2px 0 4px; }
+output { font-family: var(--mono); color: var(--ink); font-size: 12.5px; }
+
+button, .secondary {
+  font: inherit; font-size: 13px; font-weight: 500;
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  border-radius: 7px; padding: 8px 13px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--raised); color: var(--ink); text-decoration: none;
+}
+button svg, .secondary svg { width: 15px; height: 15px; flex: none; }
+button:hover:not(:disabled), .secondary:hover { border-color: #38414f; background: #222a35; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.wide { width: 100%; }
+.primary { background: var(--accent); border-color: var(--accent); color: #fff; width: 100%; padding: 11px; font-weight: 600; }
+.primary:hover:not(:disabled) { background: #6aa2f5; border-color: #6aa2f5; }
+.danger { background: var(--alert); border-color: var(--alert); color: #fff; width: 100%; padding: 11px; font-weight: 600; }
+.link { background: none; border: none; padding: 0; color: var(--accent); text-decoration: underline; font-size: inherit; display: inline; }
+.row { display: flex; gap: 8px; }
+.row button { flex: 1; }
+.actions { margin-top: 4px; }
+
+/* ------------------------------------------------------- segmented tabs */
+
+.seg { display: flex; gap: 3px; background: var(--void); padding: 3px; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 12px; }
+.seg-btn {
+  flex: 1; border: none; background: none; padding: 6px 4px; gap: 5px;
+  font-size: 12px; color: var(--ink-dim); border-radius: 6px;
+}
+.seg-btn svg { width: 14px; height: 14px; }
+.seg-btn.active { background: var(--raised); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+.panel { display: none; }
+.panel.active { display: block; }
+
+.drop { border: 1.5px dashed #303945; border-radius: 9px; padding: 20px 14px; text-align: center; transition: var(--step); }
+.drop.over { border-color: var(--accent); background: rgba(77,144,240,.08); }
+.drop p { margin: 0 0 4px; }
+.drop-icon { width: 26px; height: 26px; color: var(--ink-faint); margin-bottom: 7px; }
+
+.facts { display: grid; gap: 6px; margin: 13px 0 0; padding-top: 12px; border-top: 1px solid var(--line); }
+.facts > div { display: flex; justify-content: space-between; gap: 10px; }
+.facts dt { color: var(--ink-faint); font-size: 12.5px; }
+.facts dd { margin: 0; font-family: var(--mono); font-size: 12.5px; }
+
+/* -------------------------------------------------------------- PPE toggles */
+
+/* The two things a site actually mandates, drawn as themselves. */
+.ppe { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ppe-item {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0;
+  padding: 12px 8px; border: 1px solid var(--line); border-radius: 9px;
+  background: var(--void); cursor: pointer; color: var(--ink-faint);
+  font-size: 12.5px; transition: var(--step);
+}
+.ppe-item svg { width: 26px; height: 26px; }
+.ppe-item input { position: absolute; opacity: 0; pointer-events: none; }
+.ppe-item:has(input:checked) { color: var(--zone); border-color: rgba(217,181,40,.55); background: rgba(217,181,40,.10); }
+.ppe-item:has(input:checked) span { color: var(--ink); }
+.ppe-item:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ------------------------------------------------------------------ tuning */
+
+.tuning { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+.tuning summary {
+  display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none;
+  font-size: 12.5px; color: var(--ink-dim); padding: 2px 0;
+}
+.tuning summary::-webkit-details-marker { display: none; }
+.tuning summary svg { width: 15px; height: 15px; }
+.tuning summary .step-chev { margin-left: auto; width: 15px; height: 15px; }
+.tuning[open] summary .step-chev { transform: rotate(180deg); }
+.tuning-body { padding-top: 6px; }
+
+/* ------------------------------------------------------------------- stage */
+
+.stage { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 9px; }
+.kpi {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 11px 13px 12px; display: flex; flex-direction: column; gap: 5px;
+}
+.kpi-label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .07em;
+}
+.kpi-label svg { width: 13px; height: 13px; flex: none; }
+/* Figure and unit share a baseline, so the row scans as numbers rather than as boxes. */
+.kpi-figure { display: flex; align-items: baseline; gap: 5px; }
+.kpi-value { font-family: var(--mono); font-size: 26px; font-variant-numeric: tabular-nums; line-height: 1.05; letter-spacing: -0.02em; }
+.kpi-unit { font-size: 11.5px; color: var(--ink-faint); }
+.kpi.alert .kpi-label svg, .kpi.alert .kpi-value { color: var(--alert); }
+
+/* A breach is the one number that means act now, so it is the one that moves. */
+.kpi.live { border-color: rgba(244,68,46,.45); background: rgba(244,68,46,.07); }
+.kpi.live .kpi-value, .kpi.live .kpi-label svg { color: var(--alert); }
+.kpi.live .kpi-label svg { animation: beat 1.6s ease-in-out infinite; }
+@keyframes beat { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+
+/* An icon on a heading is a marker, not an illustration: same size as the text it sits beside. */
+.h-ico { width: 14px; height: 14px; flex: none; vertical-align: -2px; margin-right: 7px; }
+.log-head h2 { display: flex; align-items: center; }
+.disclaimer .h-ico { color: var(--ink-faint); }
+
+.viewer {
+  background: #000; border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; position: relative; min-height: 300px;
+  display: flex; align-items: center; justify-content: center;
+}
+.empty { text-align: center; padding: 56px 20px; color: var(--ink-dim); }
+.empty-icon { width: 30px; height: 30px; color: var(--ink-faint); margin-bottom: 10px; }
+.canvas-wrap { position: relative; line-height: 0; width: 100%; }
+.canvas-wrap img { width: 100%; display: block; }
+#zone-canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+.live { width: 100%; display: block; }
+.zone-hint {
+  position: absolute; left: 50%; top: 13px; transform: translateX(-50%);
+  background: rgba(11,14,19,.85); border: 1px solid var(--line);
+  color: var(--ink); font-size: 12.5px; line-height: 1.3;
+  padding: 7px 13px; border-radius: 999px; pointer-events: none; white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------- log */
+
+.log { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.log-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.table-scroll { max-height: 340px; overflow: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--ink-faint); font-weight: 600; padding: 9px 14px;
+  background: var(--surface); position: sticky; top: 0; border-bottom: 1px solid var(--line);
+}
+td { padding: 9px 14px; border-bottom: 1px solid var(--line-soft); font-variant-numeric: tabular-nums; }
+tbody tr:last-child td { border-bottom: none; }
+.placeholder td { color: var(--ink-faint); text-align: center; padding: 26px; }
+.missing { color: var(--alert); font-weight: 600; }
+/* Big enough to see who was flagged and where they stood; still opens full size in a new tab. */
+td img { width: 132px; height: 76px; object-fit: cover; border-radius: 4px; border: 1px solid var(--line); display: block; }
+.mono { font-family: var(--mono); font-size: 12.5px; }
+
+.disclaimer { color: var(--ink-faint); font-size: 12.5px; margin: 0; max-width: 78ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
