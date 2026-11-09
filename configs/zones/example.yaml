@@ -1,0 +1,13 @@
+# Example safety zone: the central block of the frame. Draw your own for a clip with
+#   python -m src.zone --source <clip> --name <zone-name>
+# Points are fractions of frame width and height (0 to 1), never pixels.
+name: example
+points:
+- - 0.25
+  - 0.25
+- - 0.75
+  - 0.25
+- - 0.75
+  - 0.95
+- - 0.25
+  - 0.95
