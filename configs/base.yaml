@@ -1,0 +1,37 @@
+# Base training config TEMPLATE: copy per run to ../../configs/<run-id>.yaml and freeze.
+# Fixed values are the reproducibility contract (see the README). Do NOT edit a
+# frozen copy: any change = a new run-ID.
+
+run_id: "X02-yolov8n-s0"          # X##-<model>-s<seed>
+model: "yolov8n.pt"               # yolov8n/s.pt | yolo11n/s.pt | yolo26n/s.pt
+seed: 0                            # one of the 3 seeds (e.g. 0, 1, 2)
+
+# --- dataset roots (read by scripts/verify_env.py; heavy data lives outside the repo) ---
+datasets:
+  sh17_root: "datasets/SH17_dataset"
+  chv_root: "datasets/CHV_dataset"
+  # EVALUATION ONLY: binding supervisor condition (2026-07-26). Pictor-PPE must never be
+  # trained or fine-tuned on, and never redistributed. Enforced in code by
+  # src/guards.py::assert_training_data_excludes_pictor, which every training entry point
+  # calls before a run starts. Listed here only so the audit + eval paths can resolve it.
+  pictor_root: "datasets/pictor-ppe_dataset"
+
+# --- data ---
+data: "configs/data/sh17.yaml"        # harmonised {person,helmet,vest}; cross-test = configs/data/chv.yaml (S1.4)
+imgsz: 640
+
+# --- fixed training recipe (comparable to C3/C4; sized for 8 GB) ---
+epochs: 200
+patience: 50                      # early-stop to cap wall-clock
+batch: 16                         # nano=16, small=8 (fits 8 GB with amp)
+amp: true                         # mixed precision, needed on 8 GB
+cache: "disk"                     # 16 GB RAM: avoid RAM caching of SH17
+workers: 6
+pretrained: true                  # COCO-pretrained (matches C4)
+optimizer: "auto"                 # Ultralytics default; log if changed
+device: 0                         # local RTX 4070
+
+# --- bookkeeping ---
+project: "runs"                # outputs -> runs/<run_id>/ (gitignored)
+name: "X02-yolov8n-s0"
+exist_ok: false
