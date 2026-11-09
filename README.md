@@ -17,7 +17,7 @@ Training needs an NVIDIA GPU. See [Use your own data](#use-your-own-data).
 
 ## Demo
 
-Demo GIF and landing page: TBC.
+**[Landing page with a saved replay of the monitor](https://onkar-gupta.github.io/ppe-compliance-detection/)**: a real run on a stock clip, with the alert log and the effect of the dwell timer. Demo GIF: TBC.
 
 ## What it does
 
@@ -54,7 +54,7 @@ The CPU figures come from one run per model, so treat them as rough.
 
 **Training cost.** After an offline pre-resize fixed an I/O bottleneck, mean epoch time fell from 244.8 s (42 epochs) to 45.0 s (3 epochs), about 5.4 times faster. This is one pilot run each ([`results/X03-timing/`](results/X03-timing/)).
 
-The six figures are in [`results/X05-figures/`](results/X05-figures/), including the critical-difference diagram and the transfer grid. Monitor results (alerts by zone, end-to-end latency) are not in the repo yet: TBC.
+The six figures are in [`results/X05-figures/`](results/X05-figures/), including the critical-difference diagram and the transfer grid. **Monitor** (one 15.6 s stock clip, [`docs/replay/replay.json`](docs/replay/replay.json)): with no dwell timer and no memory the monitor fired 19 alerts; with a 3 s dwell and 1 s memory it fired 2. Median 34.5 ms per frame (29 fps) on a laptop CPU, end to end. The clip has no ground-truth labels, so these are the monitor's own outputs and not an accuracy result. Alert accuracy by zone: TBC.
 
 ## How it works
 
@@ -164,14 +164,13 @@ Not provided.
 - **Nano models only, three seeds.** Three seeds is a floor, not a comfortable sample. Within one training dataset, an exact paired sign-flip on three seeds cannot return a p-value below 0.25, so a null result means underpowered, not equivalent.
 - **Latency is a proxy.** It was measured on a laptop GPU and a constrained CPU, not on edge hardware, and the CPU figures are one run each.
 - **Person detection is the bottleneck.** The violation axis counts an undetected worker as a missed violation, and only 59 to 73 % of workers were detected.
-- **The monitor is a demonstration.** Its alert accuracy and latency results are not in this repo yet (TBC), and no labelled site footage is included.
+- **The monitor is a demonstration.** Its alert accuracy is not measured yet (TBC): the replay clip has no ground-truth labels, and no labelled site footage is included.
 - **Weights are not distributed**, and the datasets keep their own terms, so reproducing a number needs the datasets and a trained run.
 - **The work ran in July and August 2026.** This repository is a cleaned copy of the code with a new history, so commit hashes differ from the original.
 
 ## Roadmap
 
-- Landing page with a saved replay of the monitor on an open-licensed clip.
-- Monitor results (alerts by zone, end-to-end latency) added to `results/`.
+- Alert accuracy by zone for the monitor, on labelled footage.
 - A Dockerfile for the CPU-only parts.
 
 ## Licence and citation
