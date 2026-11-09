@@ -21,4 +21,6 @@ The per-run `summary.json` files in `X04-runs/` were written at the end of each 
 
 The run IDs (`X04-y8n-s2-chv`) follow `X##-<model>-<seed>-<training dataset>`. `y8n`, `y11n` and `y26n` are YOLOv8n, YOLO11n and YOLO26n; `chv` and `sh17` are the dataset the run trained on.
 
+The critical-difference figure (`X05-fig3-cd-diagram`) was regenerated on 9 November 2026 with the repo's current `src/figures.py`, because the original (6 August) predates the Holm correction and showed raw p-values. The other five figures are the original outputs.
+
 The weights are not distributed, so the files here cannot be regenerated without retraining. The code and frozen configs are in the repo.
