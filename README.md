@@ -10,7 +10,7 @@ Benchmarking YOLOv8, YOLO11 and YOLO26 for PPE-compliance detection: 18 training
 git clone https://github.com/Onkar-Gupta/ppe-compliance-detection && cd ppe-compliance-detection
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
-pytest -q          # 199 tests, no GPU, datasets or weights needed (1 skips without a local cache)
+pytest -q          # 201 tests, no GPU, datasets or weights needed (1 skips without a local cache)
 ```
 
 Training needs an NVIDIA GPU. See [Use your own data](#use-your-own-data).
@@ -96,7 +96,7 @@ configs/           base.yaml (training template), demo.yaml (monitor),
                    splits/ (the six frozen image lists and a manifest),
                    data/ (dataset YAMLs), zones/, trackers/
 results/           result files behind every number above, with its own README
-tests/             199 tests; the logic that decides a claim is tested, not sampled
+tests/             201 tests; the logic that decides a claim is tested, not sampled
 notebooks/         empty placeholder for exploration notebooks (jupytext pairing is in jupytext.toml)
 ```
 
