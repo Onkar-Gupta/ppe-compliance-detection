@@ -1,0 +1,44 @@
+{
+  "run_id": "X04-y8n-s2-sh17",
+  "trained_on": "sh17",
+  "subset": null,
+  "seed": 2,
+  "model": "yolov8n.pt",
+  "epochs": 200,
+  "imgsz": 640,
+  "batch": 16,
+  "eval_split": "val",
+  "train_seconds": 7169.3,
+  "environment": {
+    "python": "3.13.14",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4",
+    "ultralytics": "8.4.105",
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "git_commit": "d61e730274bce524b9149316be6ea1b8692ea90b"
+  },
+  "in_domain": {
+    "map50": 0.4759582992760429,
+    "map50_95": 0.3440172911224741,
+    "precision": 0.7013668981346343,
+    "recall": 0.45079602157624743,
+    "map50_per_class": [
+      0.825251952448133,
+      0.4930028602785052,
+      0.10962008510149043
+    ]
+  },
+  "cross_domain": {
+    "map50": 0.8282384524647632,
+    "map50_95": 0.4222652131206421,
+    "precision": 0.8661059533101825,
+    "recall": 0.7674486657646223,
+    "map50_per_class": [
+      0.8759419482271738,
+      0.8633658447239505,
+      0.7454075644431655
+    ]
+  },
+  "weights": "D:\\runs\\X04-y8n-s2-sh17\\weights\\best.pt",
+  "transfer_delta_map50": 0.3523
+}

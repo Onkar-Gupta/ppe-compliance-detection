@@ -1,0 +1,38 @@
+[
+  {
+    "run_id": "X04-y8n-s2-chv",
+    "model": "yolov8n.pt",
+    "seed": 2,
+    "trained_on": "chv",
+    "tested_on": {
+      "in_domain": "chv-640",
+      "cross_domain": "sh17-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.9009138488046622,
+      "map50_95": 0.5071256755651395,
+      "precision": 0.8942266832556675,
+      "recall": 0.8577782794878885,
+      "per_class_map50": {
+        "person": 0.8942405303498348,
+        "helmet": 0.9111127685081837,
+        "vest": 0.8973882475559682
+      }
+    },
+    "cross_domain": {
+      "map50": 0.5340983294274633,
+      "map50_95": 0.304282055831855,
+      "precision": 0.6537194831713685,
+      "recall": 0.5267213015925329,
+      "per_class_map50": {
+        "person": 0.7217320187286091,
+        "helmet": 0.4690223500488272,
+        "vest": 0.41154061950495363
+      }
+    },
+    "transfer_delta_map50": -0.3668,
+    "transfer_delta_map50_95": -0.2028,
+    "weights": "D:\\runs\\X04-y8n-s2-chv\\weights\\best.pt"
+  }
+]

@@ -1,0 +1,44 @@
+{
+  "run_id": "X04-y26n-s1-chv",
+  "trained_on": "chv",
+  "subset": null,
+  "seed": 1,
+  "model": "yolo26n.pt",
+  "epochs": 200,
+  "imgsz": 640,
+  "batch": 16,
+  "eval_split": "val",
+  "train_seconds": 2918.7,
+  "environment": {
+    "python": "3.13.14",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4",
+    "ultralytics": "8.4.105",
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "git_commit": "d61e730274bce524b9149316be6ea1b8692ea90b"
+  },
+  "in_domain": {
+    "map50": 0.8977068884452158,
+    "map50_95": 0.5321608313409498,
+    "precision": 0.9244681770839772,
+    "recall": 0.8485126549088756,
+    "map50_per_class": [
+      0.9125917883594128,
+      0.9294599639987,
+      0.8510689129775346
+    ]
+  },
+  "cross_domain": {
+    "map50": 0.3272974056344528,
+    "map50_95": 0.17615706563993602,
+    "precision": 0.44427314436687815,
+    "recall": 0.40280481983977356,
+    "map50_per_class": [
+      0.6346628523472153,
+      0.2728022917349864,
+      0.07442707282115679
+    ]
+  },
+  "weights": "D:\\runs\\X04-y26n-s1-chv\\weights\\best.pt",
+  "transfer_delta_map50": -0.5704
+}

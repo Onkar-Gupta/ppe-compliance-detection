@@ -1,0 +1,434 @@
+{
+  "hardware": {
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "cpu": "Intel64 Family 6 Model 170 Stepping 4, GenuineIntel"
+  },
+  "settings": {
+    "imgsz": 640,
+    "batch": 1,
+    "warmup": 15,
+    "frames": 100
+  },
+  "constants": {
+    "y11n": {
+      "parameters": 2590425,
+      "parameters_millions": 2.59,
+      "gflops": 6.443,
+      "file_size_mb": 5.46
+    },
+    "y26n": {
+      "parameters": 2504970,
+      "parameters_millions": 2.505,
+      "gflops": 5.776,
+      "file_size_mb": 5.38
+    },
+    "y8n": {
+      "parameters": 3011433,
+      "parameters_millions": 3.011,
+      "gflops": 8.196,
+      "file_size_mb": 6.24
+    }
+  },
+  "timings": {
+    "gpu": {
+      "X04-y26n-s2-sh17": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 12.793,
+        "latency_ms_measurement_sd": 2.154,
+        "fps_mean": 78.17,
+        "stage_breakdown_ms": {
+          "preprocess": 0.806,
+          "inference": 10.377,
+          "postprocess": 0.436,
+          "total_ms": 11.619
+        },
+        "passes_ms": [
+          15.279,
+          11.48,
+          11.619
+        ]
+      },
+      "X04-y26n-s1-sh17": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 13.372,
+        "latency_ms_measurement_sd": 2.706,
+        "fps_mean": 74.78,
+        "stage_breakdown_ms": {
+          "preprocess": 1.014,
+          "inference": 14.889,
+          "postprocess": 0.593,
+          "total_ms": 16.496
+        },
+        "passes_ms": [
+          11.765,
+          11.854,
+          16.496
+        ]
+      },
+      "X04-y11n-s0-chv": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 11.894,
+        "latency_ms_measurement_sd": 0.9,
+        "fps_mean": 84.07,
+        "stage_breakdown_ms": {
+          "preprocess": 0.834,
+          "inference": 10.123,
+          "postprocess": 1.418,
+          "total_ms": 12.375
+        },
+        "passes_ms": [
+          12.452,
+          10.856,
+          12.375
+        ]
+      },
+      "X04-y8n-s2-chv": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 10.812,
+        "latency_ms_measurement_sd": 0.678,
+        "fps_mean": 92.49,
+        "stage_breakdown_ms": {
+          "preprocess": 0.944,
+          "inference": 8.66,
+          "postprocess": 1.528,
+          "total_ms": 11.133
+        },
+        "passes_ms": [
+          11.269,
+          10.033,
+          11.133
+        ]
+      },
+      "X04-y11n-s1-chv": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 12.318,
+        "latency_ms_measurement_sd": 0.497,
+        "fps_mean": 81.18,
+        "stage_breakdown_ms": {
+          "preprocess": 0.955,
+          "inference": 9.679,
+          "postprocess": 1.394,
+          "total_ms": 12.028
+        },
+        "passes_ms": [
+          12.892,
+          12.034,
+          12.028
+        ]
+      },
+      "X04-y8n-s1-sh17": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 10.594,
+        "latency_ms_measurement_sd": 0.915,
+        "fps_mean": 94.39,
+        "stage_breakdown_ms": {
+          "preprocess": 0.871,
+          "inference": 9.17,
+          "postprocess": 1.608,
+          "total_ms": 11.648
+        },
+        "passes_ms": [
+          10.14,
+          9.995,
+          11.648
+        ]
+      },
+      "X04-y26n-s2-chv": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 15.348,
+        "latency_ms_measurement_sd": 0.222,
+        "fps_mean": 65.15,
+        "stage_breakdown_ms": {
+          "preprocess": 1.41,
+          "inference": 13.195,
+          "postprocess": 0.537,
+          "total_ms": 15.142
+        },
+        "passes_ms": [
+          15.319,
+          15.584,
+          15.142
+        ]
+      },
+      "X04-y11n-s1-sh17": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 11.492,
+        "latency_ms_measurement_sd": 0.119,
+        "fps_mean": 87.02,
+        "stage_breakdown_ms": {
+          "preprocess": 0.866,
+          "inference": 9.319,
+          "postprocess": 1.298,
+          "total_ms": 11.483
+        },
+        "passes_ms": [
+          11.615,
+          11.378,
+          11.483
+        ]
+      },
+      "X04-y11n-s2-sh17": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 13.635,
+        "latency_ms_measurement_sd": 0.983,
+        "fps_mean": 73.34,
+        "stage_breakdown_ms": {
+          "preprocess": 1.086,
+          "inference": 11.929,
+          "postprocess": 1.663,
+          "total_ms": 14.678
+        },
+        "passes_ms": [
+          12.725,
+          13.502,
+          14.678
+        ]
+      },
+      "X04-y8n-s2-sh17": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 11.201,
+        "latency_ms_measurement_sd": 1.191,
+        "fps_mean": 89.28,
+        "stage_breakdown_ms": {
+          "preprocess": 0.848,
+          "inference": 7.782,
+          "postprocess": 1.35,
+          "total_ms": 9.98
+        },
+        "passes_ms": [
+          12.359,
+          11.263,
+          9.98
+        ]
+      },
+      "X04-y8n-s1-chv": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 9.849,
+        "latency_ms_measurement_sd": 0.135,
+        "fps_mean": 101.53,
+        "stage_breakdown_ms": {
+          "preprocess": 0.86,
+          "inference": 7.815,
+          "postprocess": 1.325,
+          "total_ms": 10.0
+        },
+        "passes_ms": [
+          9.741,
+          9.807,
+          10.0
+        ]
+      },
+      "X04-y26n-s0-chv": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 14.034,
+        "latency_ms_measurement_sd": 0.796,
+        "fps_mean": 71.25,
+        "stage_breakdown_ms": {
+          "preprocess": 1.116,
+          "inference": 12.774,
+          "postprocess": 0.56,
+          "total_ms": 14.45
+        },
+        "passes_ms": [
+          13.116,
+          14.537,
+          14.45
+        ]
+      },
+      "X04-y26n-s0-sh17": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 13.755,
+        "latency_ms_measurement_sd": 1.135,
+        "fps_mean": 72.7,
+        "stage_breakdown_ms": {
+          "preprocess": 0.905,
+          "inference": 11.256,
+          "postprocess": 0.452,
+          "total_ms": 12.612
+        },
+        "passes_ms": [
+          14.881,
+          13.772,
+          12.612
+        ]
+      },
+      "X04-y26n-s1-chv": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 12.776,
+        "latency_ms_measurement_sd": 0.894,
+        "fps_mean": 78.27,
+        "stage_breakdown_ms": {
+          "preprocess": 0.898,
+          "inference": 12.418,
+          "postprocess": 0.491,
+          "total_ms": 13.807
+        },
+        "passes_ms": [
+          12.231,
+          12.289,
+          13.807
+        ]
+      },
+      "X04-y11n-s2-chv": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 14.541,
+        "latency_ms_measurement_sd": 0.816,
+        "fps_mean": 68.77,
+        "stage_breakdown_ms": {
+          "preprocess": 1.738,
+          "inference": 11.703,
+          "postprocess": 1.665,
+          "total_ms": 15.106
+        },
+        "passes_ms": [
+          13.606,
+          14.912,
+          15.106
+        ]
+      },
+      "X04-y11n-s0-sh17": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 11.921,
+        "latency_ms_measurement_sd": 0.508,
+        "fps_mean": 83.89,
+        "stage_breakdown_ms": {
+          "preprocess": 0.821,
+          "inference": 10.026,
+          "postprocess": 1.355,
+          "total_ms": 12.202
+        },
+        "passes_ms": [
+          12.226,
+          11.335,
+          12.202
+        ]
+      },
+      "X04-y8n-s0-sh17": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 9.955,
+        "latency_ms_measurement_sd": 0.82,
+        "fps_mean": 100.46,
+        "stage_breakdown_ms": {
+          "preprocess": 0.858,
+          "inference": 8.526,
+          "postprocess": 1.513,
+          "total_ms": 10.897
+        },
+        "passes_ms": [
+          9.406,
+          9.561,
+          10.897
+        ]
+      },
+      "X04-y8n-s0-chv": {
+        "device": "0",
+        "repeats": 3,
+        "images_per_pass": 100,
+        "latency_ms_mean": 11.23,
+        "latency_ms_measurement_sd": 0.351,
+        "fps_mean": 89.05,
+        "stage_breakdown_ms": {
+          "preprocess": 0.932,
+          "inference": 8.525,
+          "postprocess": 1.501,
+          "total_ms": 10.959
+        },
+        "passes_ms": [
+          11.105,
+          11.626,
+          10.959
+        ]
+      }
+    },
+    "cpu": {
+      "X04-y11n-s0-chv": {
+        "device": "cpu",
+        "repeats": 2,
+        "images_per_pass": 100,
+        "latency_ms_mean": 51.459,
+        "latency_ms_measurement_sd": 0.556,
+        "fps_mean": 19.43,
+        "stage_breakdown_ms": {
+          "preprocess": 0.917,
+          "inference": 49.495,
+          "postprocess": 0.653,
+          "total_ms": 51.065
+        },
+        "passes_ms": [
+          51.852,
+          51.065
+        ]
+      },
+      "X04-y8n-s0-chv": {
+        "device": "cpu",
+        "repeats": 2,
+        "images_per_pass": 100,
+        "latency_ms_mean": 49.82,
+        "latency_ms_measurement_sd": 4.825,
+        "fps_mean": 20.07,
+        "stage_breakdown_ms": {
+          "preprocess": 1.034,
+          "inference": 51.455,
+          "postprocess": 0.743,
+          "total_ms": 53.232
+        },
+        "passes_ms": [
+          46.408,
+          53.232
+        ]
+      },
+      "X04-y26n-s0-chv": {
+        "device": "cpu",
+        "repeats": 2,
+        "images_per_pass": 100,
+        "latency_ms_mean": 68.065,
+        "latency_ms_measurement_sd": 5.984,
+        "fps_mean": 14.69,
+        "stage_breakdown_ms": {
+          "preprocess": 1.114,
+          "inference": 70.952,
+          "postprocess": 0.23,
+          "total_ms": 72.296
+        },
+        "passes_ms": [
+          63.834,
+          72.296
+        ]
+      }
+    }
+  }
+}

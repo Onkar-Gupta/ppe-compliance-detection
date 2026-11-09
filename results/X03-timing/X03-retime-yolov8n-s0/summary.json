@@ -1,0 +1,44 @@
+{
+  "run_id": "X03-retime-yolov8n-s0",
+  "trained_on": "sh17",
+  "subset": null,
+  "seed": 0,
+  "model": "yolov8n.pt",
+  "epochs": 3,
+  "imgsz": 640,
+  "batch": 16,
+  "eval_split": "val",
+  "train_seconds": 183.5,
+  "environment": {
+    "python": "3.13.14",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4",
+    "ultralytics": "8.4.105",
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "git_commit": "dcc64371c18c196ec320173537a07929e471de46"
+  },
+  "in_domain": {
+    "map50": 0.3661725088304377,
+    "map50_95": 0.25071816643900835,
+    "precision": 0.5591674487237186,
+    "recall": 0.3642853623129286,
+    "map50_per_class": [
+      0.7617560578781946,
+      0.2912726451142917,
+      0.04548882349882693
+    ]
+  },
+  "cross_domain": {
+    "map50": 0.6690399218075652,
+    "map50_95": 0.3135978723647447,
+    "precision": 0.6823536987267245,
+    "recall": 0.618193939560843,
+    "map50_per_class": [
+      0.835568854217434,
+      0.8100493973126699,
+      0.361501513892592
+    ]
+  },
+  "weights": "D:\\runs\\X03-retime-yolov8n-s0\\weights\\best.pt",
+  "transfer_delta_map50": 0.3029
+}

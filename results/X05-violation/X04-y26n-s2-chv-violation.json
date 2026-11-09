@@ -1,0 +1,59 @@
+{
+  "run_id": "X04-y26n-s2-chv",
+  "weights": "D:\\runs\\X04-y26n-s2-chv\\weights\\best.pt",
+  "settings": {
+    "confidence": 0.25,
+    "match_iou": 0.5,
+    "association_threshold": "src.associate.THRESHOLD (calibrated on SH17/CHV train)",
+    "scored": "whole crowd-sourced release, all splits"
+  },
+  "images": 774,
+  "workers": 2497,
+  "person_detection_rate": 0.6099,
+  "headline_helmet_violation_recall": 0.54,
+  "axes": {
+    "helmet": {
+      "recall": 0.54,
+      "precision": 0.7119,
+      "f1": 0.6142,
+      "support_violations": 874,
+      "base_rate": 0.35,
+      "trivial_always_flag": {
+        "recall": 1.0,
+        "precision": 0.35,
+        "note": "flags every worker; beating this is the minimum bar for the class"
+      },
+      "counts": {
+        "tp": 472,
+        "fp": 191,
+        "fn": 402,
+        "tn": 1432
+      },
+      "violations_missed_because_person_undetected": 341
+    },
+    "vest": {
+      "recall": 0.5998,
+      "precision": 0.9879,
+      "f1": 0.7464,
+      "support_violations": 2456,
+      "base_rate": 0.9836,
+      "trivial_always_flag": {
+        "recall": 1.0,
+        "precision": 0.9836,
+        "note": "flags every worker; beating this is the minimum bar for the class"
+      },
+      "counts": {
+        "tp": 1473,
+        "fp": 18,
+        "fn": 983,
+        "tn": 23
+      },
+      "violations_missed_because_person_undetected": 957
+    }
+  },
+  "workers_by_pictor_split": {
+    "train": 1646,
+    "valid": 417,
+    "test": 434
+  }
+}

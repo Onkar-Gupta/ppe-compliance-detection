@@ -1,0 +1,650 @@
+[
+  {
+    "run_id": "X04-y11n-s0-chv",
+    "model": "yolo11n.pt",
+    "seed": 0,
+    "trained_on": "chv",
+    "tested_on": {
+      "in_domain": "chv-640",
+      "cross_domain": "sh17-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.8903827761942461,
+      "map50_95": 0.5029788497373872,
+      "precision": 0.8884679410243738,
+      "recall": 0.837062937210492,
+      "per_class_map50": {
+        "person": 0.8844009365298128,
+        "helmet": 0.9181468730759599,
+        "vest": 0.8686005189769654
+      }
+    },
+    "cross_domain": {
+      "map50": 0.48961423048061753,
+      "map50_95": 0.2849554268875006,
+      "precision": 0.5953956519951736,
+      "recall": 0.4356729806755126,
+      "per_class_map50": {
+        "person": 0.7004820896764805,
+        "helmet": 0.439948466347682,
+        "vest": 0.3284121354176902
+      }
+    },
+    "transfer_delta_map50": -0.4008,
+    "transfer_delta_map50_95": -0.218,
+    "weights": "D:\\runs\\X04-y11n-s0-chv\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y11n-s0-sh17",
+    "model": "yolo11n.pt",
+    "seed": 0,
+    "trained_on": "sh17",
+    "tested_on": {
+      "in_domain": "sh17-640",
+      "cross_domain": "chv-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.6702269017878427,
+      "map50_95": 0.47492540659780963,
+      "precision": 0.7542841068707441,
+      "recall": 0.6197495718827593,
+      "per_class_map50": {
+        "person": 0.8845416921166821,
+        "helmet": 0.6750366783701349,
+        "vest": 0.45110233487671125
+      }
+    },
+    "cross_domain": {
+      "map50": 0.7692900127305385,
+      "map50_95": 0.3769657406696244,
+      "precision": 0.8170263136222666,
+      "recall": 0.7087929619958606,
+      "per_class_map50": {
+        "person": 0.8111053984944158,
+        "helmet": 0.8012778263717033,
+        "vest": 0.6954868133254967
+      }
+    },
+    "transfer_delta_map50": 0.0991,
+    "transfer_delta_map50_95": -0.098,
+    "weights": "D:\\runs\\X04-y11n-s0-sh17\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y11n-s1-chv",
+    "model": "yolo11n.pt",
+    "seed": 1,
+    "trained_on": "chv",
+    "tested_on": {
+      "in_domain": "chv-640",
+      "cross_domain": "sh17-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.8867194303784451,
+      "map50_95": 0.5011513253864458,
+      "precision": 0.9047992466287705,
+      "recall": 0.8240640044465676,
+      "per_class_map50": {
+        "person": 0.8765247087216209,
+        "helmet": 0.9105063297858939,
+        "vest": 0.8731272526278208
+      }
+    },
+    "cross_domain": {
+      "map50": 0.5301314320359624,
+      "map50_95": 0.29921685469851333,
+      "precision": 0.6609558070984143,
+      "recall": 0.49633393687330063,
+      "per_class_map50": {
+        "person": 0.727177210054027,
+        "helmet": 0.4914978898828942,
+        "vest": 0.37171919617096594
+      }
+    },
+    "transfer_delta_map50": -0.3566,
+    "transfer_delta_map50_95": -0.2019,
+    "weights": "D:\\runs\\X04-y11n-s1-chv\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y11n-s1-sh17",
+    "model": "yolo11n.pt",
+    "seed": 1,
+    "trained_on": "sh17",
+    "tested_on": {
+      "in_domain": "sh17-640",
+      "cross_domain": "chv-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.6633800258639461,
+      "map50_95": 0.4756262360418091,
+      "precision": 0.7859631597874137,
+      "recall": 0.6252219040787478,
+      "per_class_map50": {
+        "person": 0.8850555792361124,
+        "helmet": 0.6739695658886139,
+        "vest": 0.43111493246711174
+      }
+    },
+    "cross_domain": {
+      "map50": 0.7932850977075167,
+      "map50_95": 0.3931279128018274,
+      "precision": 0.8579146171597317,
+      "recall": 0.7172093825322435,
+      "per_class_map50": {
+        "person": 0.8171640520169601,
+        "helmet": 0.7977648349486588,
+        "vest": 0.7649264061569309
+      }
+    },
+    "transfer_delta_map50": 0.1299,
+    "transfer_delta_map50_95": -0.0825,
+    "weights": "D:\\runs\\X04-y11n-s1-sh17\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y11n-s2-chv",
+    "model": "yolo11n.pt",
+    "seed": 2,
+    "trained_on": "chv",
+    "tested_on": {
+      "in_domain": "chv-640",
+      "cross_domain": "sh17-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.9026505267205213,
+      "map50_95": 0.507583844781862,
+      "precision": 0.9099285058236699,
+      "recall": 0.8441986763794643,
+      "per_class_map50": {
+        "person": 0.9029528814819774,
+        "helmet": 0.9170086544644667,
+        "vest": 0.8879900442151196
+      }
+    },
+    "cross_domain": {
+      "map50": 0.5000471332730342,
+      "map50_95": 0.28152427385881823,
+      "precision": 0.580330215637937,
+      "recall": 0.5143105210609545,
+      "per_class_map50": {
+        "person": 0.6730333933728738,
+        "helmet": 0.48714609207021964,
+        "vest": 0.33996191437600887
+      }
+    },
+    "transfer_delta_map50": -0.4026,
+    "transfer_delta_map50_95": -0.2261,
+    "weights": "D:\\runs\\X04-y11n-s2-chv\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y11n-s2-sh17",
+    "model": "yolo11n.pt",
+    "seed": 2,
+    "trained_on": "sh17",
+    "tested_on": {
+      "in_domain": "sh17-640",
+      "cross_domain": "chv-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.6803958960840246,
+      "map50_95": 0.4906185212489109,
+      "precision": 0.7514761747476889,
+      "recall": 0.6406895948896553,
+      "per_class_map50": {
+        "person": 0.8827176296043615,
+        "helmet": 0.6799038195652225,
+        "vest": 0.4785662390824901
+      }
+    },
+    "cross_domain": {
+      "map50": 0.7904784072932219,
+      "map50_95": 0.3897549222005983,
+      "precision": 0.815101492567862,
+      "recall": 0.7310507431563463,
+      "per_class_map50": {
+        "person": 0.8178910800504152,
+        "helmet": 0.8101652840236462,
+        "vest": 0.7433788578056042
+      }
+    },
+    "transfer_delta_map50": 0.1101,
+    "transfer_delta_map50_95": -0.1009,
+    "weights": "D:\\runs\\X04-y11n-s2-sh17\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y26n-s0-chv",
+    "model": "yolo26n.pt",
+    "seed": 0,
+    "trained_on": "chv",
+    "tested_on": {
+      "in_domain": "chv-640",
+      "cross_domain": "sh17-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.8759602380000014,
+      "map50_95": 0.5022661897376735,
+      "precision": 0.8763979843148443,
+      "recall": 0.8293044544102014,
+      "per_class_map50": {
+        "person": 0.8821927988313185,
+        "helmet": 0.9050770313648651,
+        "vest": 0.8406108838038207
+      }
+    },
+    "cross_domain": {
+      "map50": 0.5160878950837106,
+      "map50_95": 0.2967471509708677,
+      "precision": 0.5884334518146929,
+      "recall": 0.5335529072268458,
+      "per_class_map50": {
+        "person": 0.724775354822143,
+        "helmet": 0.44089120802487347,
+        "vest": 0.3825971224041153
+      }
+    },
+    "transfer_delta_map50": -0.3599,
+    "transfer_delta_map50_95": -0.2055,
+    "weights": "D:\\runs\\X04-y26n-s0-chv\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y26n-s0-sh17",
+    "model": "yolo26n.pt",
+    "seed": 0,
+    "trained_on": "sh17",
+    "tested_on": {
+      "in_domain": "sh17-640",
+      "cross_domain": "chv-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.6611740257530391,
+      "map50_95": 0.47877276350954556,
+      "precision": 0.7582667190016318,
+      "recall": 0.6124869377254848,
+      "per_class_map50": {
+        "person": 0.8833634439754612,
+        "helmet": 0.6566612532039404,
+        "vest": 0.44349738007971573
+      }
+    },
+    "cross_domain": {
+      "map50": 0.761896287520529,
+      "map50_95": 0.3865919773053476,
+      "precision": 0.7857070883124035,
+      "recall": 0.6840809920773495,
+      "per_class_map50": {
+        "person": 0.8029879744747839,
+        "helmet": 0.7881826234879479,
+        "vest": 0.6945182645988552
+      }
+    },
+    "transfer_delta_map50": 0.1007,
+    "transfer_delta_map50_95": -0.0922,
+    "weights": "D:\\runs\\X04-y26n-s0-sh17\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y26n-s1-chv",
+    "model": "yolo26n.pt",
+    "seed": 1,
+    "trained_on": "chv",
+    "tested_on": {
+      "in_domain": "chv-640",
+      "cross_domain": "sh17-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.8830405459242353,
+      "map50_95": 0.5157730003516717,
+      "precision": 0.926628647363754,
+      "recall": 0.8196690272125845,
+      "per_class_map50": {
+        "person": 0.8822976150761207,
+        "helmet": 0.9212124362544383,
+        "vest": 0.8456115864421468
+      }
+    },
+    "cross_domain": {
+      "map50": 0.519587331090655,
+      "map50_95": 0.2995977874341332,
+      "precision": 0.6377918625040233,
+      "recall": 0.5173985683859239,
+      "per_class_map50": {
+        "person": 0.7275559547397592,
+        "helmet": 0.46401779454285047,
+        "vest": 0.36718824398935535
+      }
+    },
+    "transfer_delta_map50": -0.3635,
+    "transfer_delta_map50_95": -0.2162,
+    "weights": "D:\\runs\\X04-y26n-s1-chv\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y26n-s1-sh17",
+    "model": "yolo26n.pt",
+    "seed": 1,
+    "trained_on": "sh17",
+    "tested_on": {
+      "in_domain": "sh17-640",
+      "cross_domain": "chv-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.6599372623593286,
+      "map50_95": 0.480981371798686,
+      "precision": 0.7410227796218886,
+      "recall": 0.6337005203395268,
+      "per_class_map50": {
+        "person": 0.8853130414409762,
+        "helmet": 0.6503103985968236,
+        "vest": 0.444188347040186
+      }
+    },
+    "cross_domain": {
+      "map50": 0.7413990325601277,
+      "map50_95": 0.3744505714977215,
+      "precision": 0.8064918249042572,
+      "recall": 0.6830341563080985,
+      "per_class_map50": {
+        "person": 0.8084788191566381,
+        "helmet": 0.7475300285558364,
+        "vest": 0.6681882499679086
+      }
+    },
+    "transfer_delta_map50": 0.0815,
+    "transfer_delta_map50_95": -0.1065,
+    "weights": "D:\\runs\\X04-y26n-s1-sh17\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y26n-s2-chv",
+    "model": "yolo26n.pt",
+    "seed": 2,
+    "trained_on": "chv",
+    "tested_on": {
+      "in_domain": "chv-640",
+      "cross_domain": "sh17-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.8848961488361532,
+      "map50_95": 0.49709515409671706,
+      "precision": 0.9174797548348769,
+      "recall": 0.803208151314131,
+      "per_class_map50": {
+        "person": 0.8956574401432305,
+        "helmet": 0.9055539561599828,
+        "vest": 0.8534770502052467
+      }
+    },
+    "cross_domain": {
+      "map50": 0.5350153182180896,
+      "map50_95": 0.31102235571192766,
+      "precision": 0.5712748186980271,
+      "recall": 0.5934258474101143,
+      "per_class_map50": {
+        "person": 0.7327838899042484,
+        "helmet": 0.4565722565160577,
+        "vest": 0.4156898082339623
+      }
+    },
+    "transfer_delta_map50": -0.3499,
+    "transfer_delta_map50_95": -0.1861,
+    "weights": "D:\\runs\\X04-y26n-s2-chv\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y26n-s2-sh17",
+    "model": "yolo26n.pt",
+    "seed": 2,
+    "trained_on": "sh17",
+    "tested_on": {
+      "in_domain": "sh17-640",
+      "cross_domain": "chv-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.6725680890296809,
+      "map50_95": 0.4853236807053624,
+      "precision": 0.7405382686813784,
+      "recall": 0.637040712208616,
+      "per_class_map50": {
+        "person": 0.8862904707273773,
+        "helmet": 0.6548280849403261,
+        "vest": 0.476585711421339
+      }
+    },
+    "cross_domain": {
+      "map50": 0.7746267246039925,
+      "map50_95": 0.3974569309436072,
+      "precision": 0.8187927934910176,
+      "recall": 0.7145753359740907,
+      "per_class_map50": {
+        "person": 0.7976881389448347,
+        "helmet": 0.8116559500364947,
+        "vest": 0.7145360848306482
+      }
+    },
+    "transfer_delta_map50": 0.1021,
+    "transfer_delta_map50_95": -0.0879,
+    "weights": "D:\\runs\\X04-y26n-s2-sh17\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y8n-s0-chv",
+    "model": "yolov8n.pt",
+    "seed": 0,
+    "trained_on": "chv",
+    "tested_on": {
+      "in_domain": "chv-640",
+      "cross_domain": "sh17-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.8819863590940411,
+      "map50_95": 0.4934393911472164,
+      "precision": 0.9008317593150378,
+      "recall": 0.8317353075706063,
+      "per_class_map50": {
+        "person": 0.8749382844872593,
+        "helmet": 0.9122830979408773,
+        "vest": 0.8587376948539871
+      }
+    },
+    "cross_domain": {
+      "map50": 0.5111024617636397,
+      "map50_95": 0.29125624420996465,
+      "precision": 0.5815874140127936,
+      "recall": 0.4719277194121522,
+      "per_class_map50": {
+        "person": 0.6956187253276773,
+        "helmet": 0.5016660693682927,
+        "vest": 0.33602259059494904
+      }
+    },
+    "transfer_delta_map50": -0.3709,
+    "transfer_delta_map50_95": -0.2022,
+    "weights": "D:\\runs\\X04-y8n-s0-chv\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y8n-s0-sh17",
+    "model": "yolov8n.pt",
+    "seed": 0,
+    "trained_on": "sh17",
+    "tested_on": {
+      "in_domain": "sh17-640",
+      "cross_domain": "chv-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.6621399312966169,
+      "map50_95": 0.4757511096159193,
+      "precision": 0.7133435968740859,
+      "recall": 0.6627859536800781,
+      "per_class_map50": {
+        "person": 0.8850817454291406,
+        "helmet": 0.6495218611517737,
+        "vest": 0.45181618730893636
+      }
+    },
+    "cross_domain": {
+      "map50": 0.7944684969363297,
+      "map50_95": 0.3950746067511749,
+      "precision": 0.8190757778048904,
+      "recall": 0.7382669649976629,
+      "per_class_map50": {
+        "person": 0.7973759269790387,
+        "helmet": 0.8059413616563689,
+        "vest": 0.7800882021735815
+      }
+    },
+    "transfer_delta_map50": 0.1323,
+    "transfer_delta_map50_95": -0.0807,
+    "weights": "D:\\runs\\X04-y8n-s0-sh17\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y8n-s1-chv",
+    "model": "yolov8n.pt",
+    "seed": 1,
+    "trained_on": "chv",
+    "tested_on": {
+      "in_domain": "chv-640",
+      "cross_domain": "sh17-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.893366221114189,
+      "map50_95": 0.5087649564354298,
+      "precision": 0.8821364225107612,
+      "recall": 0.8480207776541538,
+      "per_class_map50": {
+        "person": 0.8931720594253987,
+        "helmet": 0.9145104954705788,
+        "vest": 0.8724161084465892
+      }
+    },
+    "cross_domain": {
+      "map50": 0.5269529224571404,
+      "map50_95": 0.30469323297691375,
+      "precision": 0.5701572200859837,
+      "recall": 0.5364923458453655,
+      "per_class_map50": {
+        "person": 0.7011464745596216,
+        "helmet": 0.492638710501199,
+        "vest": 0.38707358231060063
+      }
+    },
+    "transfer_delta_map50": -0.3664,
+    "transfer_delta_map50_95": -0.2041,
+    "weights": "D:\\runs\\X04-y8n-s1-chv\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y8n-s1-sh17",
+    "model": "yolov8n.pt",
+    "seed": 1,
+    "trained_on": "sh17",
+    "tested_on": {
+      "in_domain": "sh17-640",
+      "cross_domain": "chv-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.6660440077525807,
+      "map50_95": 0.4750332220972869,
+      "precision": 0.737798583070398,
+      "recall": 0.6259404325854877,
+      "per_class_map50": {
+        "person": 0.8895921539289426,
+        "helmet": 0.6532335555386289,
+        "vest": 0.4553063137901704
+      }
+    },
+    "cross_domain": {
+      "map50": 0.7856811698208755,
+      "map50_95": 0.39443971588121735,
+      "precision": 0.8097729680173057,
+      "recall": 0.7492106599755637,
+      "per_class_map50": {
+        "person": 0.8205658411393855,
+        "helmet": 0.7946315433395692,
+        "vest": 0.7418461249836723
+      }
+    },
+    "transfer_delta_map50": 0.1196,
+    "transfer_delta_map50_95": -0.0806,
+    "weights": "D:\\runs\\X04-y8n-s1-sh17\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y8n-s2-chv",
+    "model": "yolov8n.pt",
+    "seed": 2,
+    "trained_on": "chv",
+    "tested_on": {
+      "in_domain": "chv-640",
+      "cross_domain": "sh17-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.9009138488046622,
+      "map50_95": 0.5071256755651395,
+      "precision": 0.8942266832556675,
+      "recall": 0.8577782794878885,
+      "per_class_map50": {
+        "person": 0.8942405303498348,
+        "helmet": 0.9111127685081837,
+        "vest": 0.8973882475559682
+      }
+    },
+    "cross_domain": {
+      "map50": 0.5340983294274633,
+      "map50_95": 0.304282055831855,
+      "precision": 0.6537194831713685,
+      "recall": 0.5267213015925329,
+      "per_class_map50": {
+        "person": 0.7217320187286091,
+        "helmet": 0.4690223500488272,
+        "vest": 0.41154061950495363
+      }
+    },
+    "transfer_delta_map50": -0.3668,
+    "transfer_delta_map50_95": -0.2028,
+    "weights": "D:\\runs\\X04-y8n-s2-chv\\weights\\best.pt"
+  },
+  {
+    "run_id": "X04-y8n-s2-sh17",
+    "model": "yolov8n.pt",
+    "seed": 2,
+    "trained_on": "sh17",
+    "tested_on": {
+      "in_domain": "sh17-640",
+      "cross_domain": "chv-640"
+    },
+    "eval_split": "test",
+    "in_domain": {
+      "map50": 0.6708604254132472,
+      "map50_95": 0.48238694368759366,
+      "precision": 0.738997203601229,
+      "recall": 0.6548709045881531,
+      "per_class_map50": {
+        "person": 0.8884094201325465,
+        "helmet": 0.661866360860363,
+        "vest": 0.4623054952468322
+      }
+    },
+    "cross_domain": {
+      "map50": 0.7944641654259191,
+      "map50_95": 0.4041952901984558,
+      "precision": 0.8364753704762012,
+      "recall": 0.7345154670757607,
+      "per_class_map50": {
+        "person": 0.8190935991508108,
+        "helmet": 0.8217044047594092,
+        "vest": 0.7425944923675373
+      }
+    },
+    "transfer_delta_map50": 0.1236,
+    "transfer_delta_map50_95": -0.0782,
+    "weights": "D:\\runs\\X04-y8n-s2-sh17\\weights\\best.pt"
+  }
+]
